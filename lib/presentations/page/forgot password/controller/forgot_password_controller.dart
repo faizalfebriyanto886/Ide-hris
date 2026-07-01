@@ -1,7 +1,14 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
+import '../../../reusable_widget/snackbar/app_snackbar.dart';
 
 class ForgotPasswordController extends GetxController {
   var email = ''.obs;
+
+  get AppSnackbar => null;
+
+  VoidCallback? get submitForgotPassword => null;
 
   void setEmail(String value) {
     email.value = value;
@@ -9,10 +16,12 @@ class ForgotPasswordController extends GetxController {
 
   void submit() {
     if (email.value.isEmpty) {
-      Get.snackbar("Error", "Email wajib diisi");
+      AppSnackbar.error("Error", "Email wajib diisi");
       return;
     }
 
-    Get.snackbar("Success", "Link reset dikirim ke ${email.value}");
+    AppSnackbar.success("Berhasil", "Link reset dikirim ke ${email.value}");
+
+    Get.back(); // balik ke login
   }
 }

@@ -9,6 +9,14 @@ class LoginController extends GetxController {
   var isObscure = true.obs;
   var isLoading = false.obs;
 
+  ValueChanged<String>? get setEmail => null;
+
+  ValueChanged<String>? get setPassword => null;
+
+  ValueChanged<String>? get setUsername => null;
+
+  GestureTapCallback? get forgotPassword => null;
+
   void togglePassword() {
     isObscure.value = !isObscure.value;
   }
