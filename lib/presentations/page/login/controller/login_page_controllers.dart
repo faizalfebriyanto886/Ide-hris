@@ -1,43 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../routes/app_routes.dart';
 
-class LoginController {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class LoginController extends GetxController {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  final ValueNotifier<bool> isObscure = ValueNotifier<bool>(true);
-  final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+  var isObscure = true.obs;
+  var isLoading = false.obs;
 
   void togglePassword() {
     isObscure.value = !isObscure.value;
   }
 
-  Future<void> login(BuildContext context) async {
+  void goToForgotPassword() {
+    Get.toNamed(Routes.FORGOT_PASSWORD);
+  }
+
+  Future<void> login() async {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Username and password cannot be empty')),
-      );
+      Get.snackbar("Error", "Username dan password wajib diisi");
       return;
     }
 
-    if (isLoading.value) return;
     isLoading.value = true;
 
-    // Placeholder login logic. Replace with real authentication.
     await Future.delayed(const Duration(seconds: 1));
 
     isLoading.value = false;
+
+    Get.snackbar("Success", "Login berhasil (dummy)");
   }
 
-  final ValueNotifier<bool> isLoggedIn = ValueNotifier<bool>(false);
-  final ValueNotifier<String> errorMessage = ValueNotifier<String>('');
-
-  void dispose() {
+  @override
+  void onClose() {
     usernameController.dispose();
     passwordController.dispose();
-    isLoading.dispose();
-    isObscure.dispose();
+    super.onClose();
   }
 }
