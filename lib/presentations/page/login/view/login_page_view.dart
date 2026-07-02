@@ -24,7 +24,6 @@ class LoginView extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              // PERBAIKAN: Tambahkan SingleChildScrollView di sini
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -82,9 +81,9 @@ class LoginView extends StatelessWidget {
                     const SizedBox(height: 6),
 
                     TextField(
-                      onChanged: controller.setUsername,
+                      onChanged: controller.setEmail,
                       decoration: InputDecoration(
-                        hintText: "Masukkan nama pengguna",
+                        hintText: "Masukkan username Anda",
                         filled: true,
                         fillColor: const Color(0xFFF5F5F5),
                         border: OutlineInputBorder(
@@ -112,7 +111,6 @@ class LoginView extends StatelessWidget {
                           filled: true,
                           fillColor: const Color(0xFFF5F5F5),
                           suffixIcon: IconButton(
-                            // PERBAIKAN: Tombol mata sekarang memanggil fungsi yang benar
                             onPressed: controller.togglePassword,
                             icon: Icon(
                               controller.isObscure.value
@@ -135,7 +133,6 @@ class LoginView extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          // Pastikan route '/forgot-password' sudah dibuat di GetMaterialApp
                           Get.toNamed('/forgot-password');
                         },
                         child: const Text(

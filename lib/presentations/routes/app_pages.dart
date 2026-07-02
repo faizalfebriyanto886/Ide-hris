@@ -1,18 +1,17 @@
 import 'package:get/get.dart';
+import 'package:idehris/presentations/page/dashboard/controller/dashboard_controller.dart';
+import 'package:idehris/presentations/page/dashboard/view/dashboard_view.dart';
 import 'package:idehris/presentations/page/forgot%20password/controller/forgot_password_controller.dart';
 import 'package:idehris/presentations/page/login/controller/login_page_controllers.dart';
 
 import '../../presentations/page/login/view/login_page_view.dart';
-import '../../presentations/page/login/binding/login_binding.dart';
 
 import '../../presentations/page/forgot password/view/forgot_password_view.dart';
-import '../../presentations/page/forgot password/binding/forgot_password_binding.dart';
 
 import 'app_routes.dart';
 
-import 'package:get/get.dart';
-
 class AppPages {
+  // ignore: constant_identifier_names
   static const INITIAL = Routes.LOGIN;
 
   static final routes = [
@@ -28,6 +27,13 @@ class AppPages {
       page: () => const ForgotPasswordPage(),
       binding: BindingsBuilder(() {
         Get.put(ForgotPasswordController());
+      }),
+    ),
+    GetPage(
+      name: '/dashboard',
+      page: () => const DashboardView(),
+      binding: BindingsBuilder(() {
+        Get.put(DashboardController());
       }),
     ),
   ];
