@@ -1,195 +1,190 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idehris/presentations/reusable_widget/button/app_button.dart';
 import '../controller/login_page_controllers.dart';
 
-class LoginPage extends GetView<LoginController> {
-  const LoginPage({super.key});
-
-  InputDecoration inputStyle(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(fontSize: 13, color: Colors.grey),
-      filled: true,
-      fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
-      ),
-    );
-  }
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+
     return Scaffold(
+      backgroundColor: const Color(0xFFEDEDED),
       body: Stack(
         children: [
-          /// background
-          Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Container(color: const Color(0xFF0D47A1)),
+          Container(height: 260, color: const Color(0xFF1E4B8F)),
+
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: const EdgeInsets.only(top: 110, left: 16, right: 16),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
               ),
-              Expanded(flex: 3, child: Container(color: Colors.white)),
-            ],
-          ),
-
-          /// CONTENT
-          SafeArea(
-            child: Center(
+              // PERBAIKAN: Tambahkan SingleChildScrollView di sini
               child: SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF4F6F8),
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    /// LOGO
+                    Image.asset("assets/images/Logo1.png", height: 50),
+
+                    const SizedBox(height: 8),
+
+                    /// CHIP TEXT
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      /// LOGO
-                      Image.asset('assets/images/Logo1.png', height: 40),
-
-                      const SizedBox(height: 8),
-
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE6E9F5),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        "HR Information System on Apps",
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF2D3E9F),
+                          fontWeight: FontWeight.w500,
                         ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFD6E4FF),
-                          borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    const Text(
+                      "Silahkan Masuk",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    const Text(
+                      "Pastikan anda masuk menggunakan akun yang sudah didaftarkan oleh admin",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    /// USERNAME
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Username *"),
+                    ),
+                    const SizedBox(height: 6),
+
+                    TextField(
+                      onChanged: controller.setUsername,
+                      decoration: InputDecoration(
+                        hintText: "Masukkan nama pengguna",
+                        filled: true,
+                        fillColor: const Color(0xFFF5F5F5),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
                         ),
-                        child: const Text(
-                          "HR Information System on Apps",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Color(0xFF1E40AF),
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    /// PASSWORD
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Password *"),
+                    ),
+                    const SizedBox(height: 6),
+
+                    Obx(
+                      () => TextField(
+                        obscureText: controller.isObscure.value,
+                        onChanged: controller.setPassword,
+                        decoration: InputDecoration(
+                          hintText: "Masukkan password Anda",
+                          filled: true,
+                          fillColor: const Color(0xFFF5F5F5),
+                          suffixIcon: IconButton(
+                            // PERBAIKAN: Tombol mata sekarang memanggil fungsi yang benar
+                            onPressed: controller.togglePassword,
+                            icon: Icon(
+                              controller.isObscure.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
                           ),
                         ),
                       ),
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 8),
 
-                      /// TITLE
-                      const Text(
-                        "Silahkan Masuk",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                    /// LUPA PASSWORD
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          // Pastikan route '/forgot-password' sudah dibuat di GetMaterialApp
+                          Get.toNamed('/forgot-password');
+                        },
+                        child: const Text(
+                          "Lupa Kata Sandi?",
+                          style: TextStyle(color: Colors.blue, fontSize: 12),
                         ),
                       ),
+                    ),
 
-                      const SizedBox(height: 6),
+                    const SizedBox(height: 20),
 
-                      const Text(
-                        "Pastikan anda masuk menggunakan akun yang sudah\n"
-                        "didaftarkan oleh admin",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      /// username
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Username *"),
-                      ),
-                      const SizedBox(height: 6),
-
-                      TextField(
-                        onChanged: controller.setUsername,
-                        decoration: inputStyle("Masukkan nama pengguna"),
-                      ),
-
-                      const SizedBox(height: 14),
-
-                      /// PASSWORD
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Password *"),
-                      ),
-                      const SizedBox(height: 6),
-
-                      Obx(
-                        () => TextField(
-                          obscureText: controller.isObscure.value,
-                          onChanged: controller.setPassword,
-                          decoration: inputStyle("Masukkan password Anda")
-                              .copyWith(
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    controller.isObscure.value
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                    size: 18,
-                                  ),
-                                  onPressed: controller.togglePassword,
+                    /// BUTTON MASUK
+                    Material(
+                      color: const Color(0xFF2D3E9F),
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        onTap: controller.login,
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Masuk",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      /// FORGOT PASSWORD
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: controller.goToForgotPassword,
-                          child: const Text(
-                            "Lupa Kata Sandi?",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF1E40AF),
-                            ),
+                              SizedBox(width: 8),
+                              Icon(Icons.check, color: Colors.white, size: 18),
+                            ],
                           ),
                         ),
                       ),
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                      /// BUTTON
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: controller.login,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF2F3A8F),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Text("Masuk"),
-                        ),
-                      ),
+                    const Divider(),
+                    const SizedBox(height: 8),
 
-                      const SizedBox(height: 18),
-
-                      const Text(
-                        "Belum punya akun? Hubungi Admin",
-                        style: TextStyle(fontSize: 11, color: Colors.grey),
-                      ),
-                    ],
-                  ),
+                    const Text(
+                      "Belum punya akun? Hubungi Admin",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
                 ),
               ),
             ),

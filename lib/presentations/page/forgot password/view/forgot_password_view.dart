@@ -10,7 +10,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
     return Scaffold(
       body: Stack(
         children: [
-          /// BACKGROUND 2 TONE
+          /// BACKGROUND
           Column(
             children: [
               Expanded(
@@ -106,20 +106,25 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                         const SizedBox(height: 20),
 
                         /// SUBMIT BUTTON
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: controller.submit,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF2F3A8F),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                        Material(
+                          color: const Color(0xFF2F3A8F),
+                          borderRadius: BorderRadius.circular(16),
+                          child: InkWell(
+                            onTap: controller.submit, // Panggil fungsi submit
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              width: double.infinity,
+                              height: 50,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "Kirim",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
-                              elevation: 0,
                             ),
-                            child: const Text("Kirim"),
                           ),
                         ),
                       ],

@@ -1,53 +1,62 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../reusable_widget/snackbar/app_snackbar.dart';
-import '../../../routes/app_routes.dart';
+import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  String username = '';
+  String password = '';
 
-  var isObscure = true.obs;
-  var isLoading = false.obs;
+  final isObscure = true.obs;
 
   void setUsername(String value) {
-    usernameController.text = value;
+    username = value;
   }
 
   void setPassword(String value) {
-    passwordController.text = value;
+    password = value;
   }
 
+  // Fungsi ini sekarang bekerja untuk tombol mata di password
   void togglePassword() {
     isObscure.value = !isObscure.value;
   }
 
-  void goToForgotPassword() {
-    Get.toNamed(Routes.FORGOT_PASSWORD);
-  }
-
-  Future<void> login() async {
-    final username = usernameController.text.trim();
-    final password = passwordController.text.trim();
-
+  void login() {
     if (username.isEmpty || password.isEmpty) {
-      AppSnackbar.error("Error", "Username dan password wajib diisi");
+      Get.snackbar(
+        'Error',
+        'Username dan password wajib diisi',
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
       return;
     }
 
-    isLoading.value = true;
+    if (username != 'user') {
+      Get.snackbar(
+        'Error',
+        'Username tidak cocok',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
 
-    await Future.delayed(const Duration(seconds: 1));
+    if (password != 'password') {
+      Get.snackbar(
+        'Error',
+        'Password salah',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
 
-    isLoading.value = false;
-
-    AppSnackbar.success("Success", "Login berhasil");
-  }
-
-  @override
-  void onClose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.onClose();
+    Get.snackbar(
+      'Sukses',
+      'Login berhasil',
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
+    // Get.offAllNamed('/home');
   }
 }

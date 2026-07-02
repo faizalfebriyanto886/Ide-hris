@@ -18,7 +18,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.LOGIN,
-      page: () => const LoginPage(),
+      page: () => const LoginView(),
       binding: BindingsBuilder(() {
         Get.put(LoginController());
       }),
