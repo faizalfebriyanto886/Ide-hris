@@ -27,12 +27,12 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
               children: [
                 const SizedBox(height: 40),
 
-                /// 🖼 LOGO
+                /// LOGO
                 Image.asset('assets/images/Logo1.png', height: 60),
 
                 const SizedBox(height: 20),
 
-                /// 🏷 HR BOX
+                /// HR BOX
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -67,7 +67,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// 🔙 BACK BUTTON
+                        /// BACK BUTTON
                         GestureDetector(
                           onTap: () => Get.back(),
                           child: const Icon(Icons.arrow_back),
@@ -110,7 +110,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: controller.submitForgotPassword,
+                            onPressed: controller.submit,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF2F3A8F),
                               foregroundColor: Colors.white,

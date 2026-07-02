@@ -6,8 +6,6 @@ import '../../../reusable_widget/snackbar/app_snackbar.dart';
 class ForgotPasswordController extends GetxController {
   var email = ''.obs;
 
-  get AppSnackbar => null;
-
   VoidCallback? get submitForgotPassword => null;
 
   void setEmail(String value) {
@@ -22,6 +20,6 @@ class ForgotPasswordController extends GetxController {
 
     AppSnackbar.success("Berhasil", "Link reset dikirim ke ${email.value}");
 
-    Get.back(); // balik ke login
+    Get.back();
   }
 }

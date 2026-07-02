@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../reusable_widget/snackbar/app_snackbar.dart';
 import '../../../routes/app_routes.dart';
 
 class LoginController extends GetxController {
@@ -9,13 +10,13 @@ class LoginController extends GetxController {
   var isObscure = true.obs;
   var isLoading = false.obs;
 
-  ValueChanged<String>? get setEmail => null;
+  void setUsername(String value) {
+    usernameController.text = value;
+  }
 
-  ValueChanged<String>? get setPassword => null;
-
-  ValueChanged<String>? get setUsername => null;
-
-  GestureTapCallback? get forgotPassword => null;
+  void setPassword(String value) {
+    passwordController.text = value;
+  }
 
   void togglePassword() {
     isObscure.value = !isObscure.value;
@@ -30,7 +31,7 @@ class LoginController extends GetxController {
     final password = passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
-      Get.snackbar("Error", "Username dan password wajib diisi");
+      AppSnackbar.error("Error", "Username dan password wajib diisi");
       return;
     }
 
@@ -40,7 +41,7 @@ class LoginController extends GetxController {
 
     isLoading.value = false;
 
-    Get.snackbar("Success", "Login berhasil (dummy)");
+    AppSnackbar.success("Success", "Login berhasil");
   }
 
   @override
