@@ -22,7 +22,7 @@ class AppButton extends StatelessWidget {
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          color: const Color(0xFF2F3A8F), // sama persis
+          color: const Color(0xFF2F3A8F), 
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
