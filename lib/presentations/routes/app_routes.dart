@@ -5,4 +5,5 @@ abstract class Routes {
   static const FORGOT_PASSWORD = '/forgot-password';
   // ignore: constant_identifier_names
   static const DASHBOARD = '/dashboard';
+  static const HOME = '/home';
 }

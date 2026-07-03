@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/forgot_password_controller.dart';
+import '../../../reusable_widget/customElevatedButton/custom_elevated_button.dart';
 
 class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   const ForgotPasswordPage({super.key});
@@ -10,7 +11,6 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
     return Scaffold(
       body: Stack(
         children: [
-          /// BACKGROUND
           Column(
             children: [
               Expanded(
@@ -20,19 +20,12 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
               Expanded(flex: 3, child: Container(color: Colors.white)),
             ],
           ),
-
-          /// CONTENT
           SafeArea(
             child: Column(
               children: [
                 const SizedBox(height: 40),
-
-                /// LOGO
                 Image.asset('assets/images/Logo1.png', height: 60),
-
                 const SizedBox(height: 20),
-
-                /// HR BOX
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -50,10 +43,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 40),
-
-                /// CARD
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -67,14 +57,11 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// BACK BUTTON
                         GestureDetector(
                           onTap: () => Get.back(),
                           child: const Icon(Icons.arrow_back),
                         ),
-
                         const SizedBox(height: 10),
-
                         const Text(
                           "Lupa Kata Sandi",
                           style: TextStyle(
@@ -82,17 +69,12 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
                         const SizedBox(height: 10),
-
                         const Text(
                           "Masukkan email untuk reset password",
                           style: TextStyle(color: Colors.grey),
                         ),
-
                         const SizedBox(height: 20),
-
-                        /// EMAIL
                         TextField(
                           onChanged: controller.setEmail,
                           decoration: InputDecoration(
@@ -102,30 +84,10 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                             ),
                           ),
                         ),
-
                         const SizedBox(height: 20),
-
-                        /// SUBMIT BUTTON
-                        Material(
-                          color: const Color(0xFF2F3A8F),
-                          borderRadius: BorderRadius.circular(16),
-                          child: InkWell(
-                            onTap: controller.submit, // Panggil fungsi submit
-                            borderRadius: BorderRadius.circular(16),
-                            child: Container(
-                              width: double.infinity,
-                              height: 50,
-                              alignment: Alignment.center,
-                              child: const Text(
-                                "Kirim",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
+                        CustomElevatedButton(
+                          label: "Kirim",
+                          onTap: controller.submit,
                         ),
                       ],
                     ),

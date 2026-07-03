@@ -30,10 +30,10 @@ class LoginController extends GetxController {
       return;
     }
 
-    if (email != 'user@example.com') {
+    if (email != 'user@gmail.com') {
       Get.snackbar(
         'Error',
-        'Username tidak cocok',
+        'Email tidak cocok',
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

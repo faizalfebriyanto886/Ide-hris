@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/dashboard_controller.dart';
 
+// Import semua halaman yang sudah dibuat
+import 'package:idehris/presentations/page/home/view/home_view.dart';
+import 'package:idehris/presentations/page/chat/view/chat_view.dart';
+import 'package:idehris/presentations/page/notification/view/notification_view.dart';
+import 'package:idehris/presentations/page/profile/view/profile_view.dart';
+
+import 'package:idehris/presentations/reusable_widget/customNavBarItem/custom_navbar_item.dart';
+
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
 
@@ -10,124 +18,67 @@ class DashboardView extends StatelessWidget {
     final controller = Get.put(DashboardController());
 
     final List<Widget> pages = [
-      const Center(
-        child: Text("Halaman Utama", style: TextStyle(fontSize: 20)),
-      ),
-      const Center(
-        child: Text("Halaman Obrolan", style: TextStyle(fontSize: 20)),
-      ),
-      const Center(
-        child: Text("Halaman Notifikasi", style: TextStyle(fontSize: 20)),
-      ),
-      const Center(
-        child: Text("Halaman Profil", style: TextStyle(fontSize: 20)),
-      ),
+      const HomeView(),
+      const ChatView(),
+      const NotificationView(),
+      const ProfileView(),
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-
       body: Obx(() => pages[controller.selectedIndex.value]),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.only(
-              top: 12,
-              left: 16,
-              right: 16,
-              bottom: 8,
-            ),
-            child: Material(
-              color: const Color(0xFF2D3E9F),
-              borderRadius: BorderRadius.circular(12),
-              child: InkWell(
-                onTap: () {
-                  Get.snackbar(
-                    "Absen Masuk",
-                    "Membuka fitur absensi...",
-                    backgroundColor: Colors.green,
-                    colorText: Colors.white,
-                  );
-                },
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Absen Masuk",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Icon(Icons.login, color: Colors.white, size: 20),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          Obx(
-            () => Container(
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: SafeArea(
+          bottom: true,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            decoration: const BoxDecoration(
               color: Colors.white,
-              child: BottomNavigationBar(
-                currentIndex: controller.selectedIndex.value,
-                onTap: controller.changeTabIndex,
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.white,
-                elevation: 0,
-                selectedItemColor: const Color(0xFF2D3E9F),
-                unselectedItemColor: const Color(0xFFD4D4D4),
-                selectedLabelStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  offset: Offset(0, -1),
                 ),
-                unselectedLabelStyle: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                ),
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: EdgeInsets.only(bottom: 4),
-                      child: Icon(Icons.home_filled, size: 28),
-                    ),
+              ],
+            ),
+            child: Obx(
+              () => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomNavBarItem(
                     label: "Utama",
+                    icon: Icons.home,
+                    iconDisabled: Icons.home_outlined,
+                    selected: controller.selectedIndex.value == 0,
+                    onTap: () => controller.selectedIndex.value = 0,
                   ),
-                  BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: EdgeInsets.only(bottom: 4),
-                      child: Icon(Icons.chat_bubble, size: 26),
-                    ),
+                  CustomNavBarItem(
                     label: "Obrolan",
+                    icon: Icons.chat_bubble,
+                    iconDisabled: Icons.chat_bubble_outline,
+                    selected: controller.selectedIndex.value == 1,
+                    onTap: () => controller.selectedIndex.value = 1,
                   ),
-                  BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: EdgeInsets.only(bottom: 4),
-                      child: Icon(Icons.notifications, size: 28),
-                    ),
+                  CustomNavBarItem(
                     label: "Notifikasi",
+                    icon: Icons.notifications,
+                    iconDisabled: Icons.notifications_none,
+                    selected: controller.selectedIndex.value == 2,
+                    onTap: () => controller.selectedIndex.value = 2,
                   ),
-                  BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: EdgeInsets.only(bottom: 4),
-                      child: Icon(Icons.person, size: 28),
-                    ),
+                  CustomNavBarItem(
                     label: "Profil",
+                    icon: Icons.person,
+                    iconDisabled: Icons.person_outline,
+                    selected: controller.selectedIndex.value == 3,
+                    onTap: () => controller.selectedIndex.value = 3,
                   ),
                 ],
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

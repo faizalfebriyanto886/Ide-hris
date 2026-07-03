@@ -36,5 +36,12 @@ class AppPages {
         Get.put(DashboardController());
       }),
     ),
+    GetPage(
+      name: Routes.HOME,
+      page: () => const DashboardView(),
+      binding: BindingsBuilder(() {
+        Get.put(DashboardController());
+      }),
+    ),
   ];
 }

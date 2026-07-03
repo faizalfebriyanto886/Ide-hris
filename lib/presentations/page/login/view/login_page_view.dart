@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/login_page_controllers.dart';
+import '../../../reusable_widget/customElevatedButton/custom_elevated_button.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -14,7 +15,6 @@ class LoginView extends StatelessWidget {
       body: Stack(
         children: [
           Container(height: 260, color: const Color(0xFF1E4B8F)),
-
           Align(
             alignment: Alignment.topCenter,
             child: Container(
@@ -28,12 +28,8 @@ class LoginView extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    /// LOGO
                     Image.asset("assets/images/Logo1.png", height: 50),
-
                     const SizedBox(height: 8),
-
-                    /// CHIP TEXT
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -52,9 +48,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 20),
-
                     const Text(
                       "Silahkan Masuk",
                       style: TextStyle(
@@ -62,9 +56,7 @@ class LoginView extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 6),
-
                     const Text(
                       "Pastikan anda masuk menggunakan akun yang sudah didaftarkan oleh admin",
                       textAlign: TextAlign.center,
@@ -73,17 +65,16 @@ class LoginView extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
-                    /// USERNAME
+                    /// EMAIL FIELD
                     const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("Username *"),
+                      child: Text("Email *"),
                     ),
                     const SizedBox(height: 6),
-
                     TextField(
                       onChanged: controller.setEmail,
                       decoration: InputDecoration(
-                        hintText: "Masukkan username Anda",
+                        hintText: "Masukkan email Anda",
                         filled: true,
                         fillColor: const Color(0xFFF5F5F5),
                         border: OutlineInputBorder(
@@ -95,13 +86,12 @@ class LoginView extends StatelessWidget {
 
                     const SizedBox(height: 16),
 
-                    /// PASSWORD
+                    /// PASSWORD FIELD
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text("Password *"),
                     ),
                     const SizedBox(height: 6),
-
                     Obx(
                       () => TextField(
                         obscureText: controller.isObscure.value,
@@ -110,6 +100,10 @@ class LoginView extends StatelessWidget {
                           hintText: "Masukkan password Anda",
                           filled: true,
                           fillColor: const Color(0xFFF5F5F5),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
                           suffixIcon: IconButton(
                             onPressed: controller.togglePassword,
                             icon: Icon(
@@ -118,23 +112,17 @@ class LoginView extends StatelessWidget {
                                   : Icons.visibility,
                             ),
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 8),
 
-                    /// LUPA PASSWORD
+                    /// LUPA KATA SANDI
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/forgot-password');
-                        },
+                        onTap: () => Get.toNamed('/forgot-password'),
                         child: const Text(
                           "Lupa Kata Sandi?",
                           style: TextStyle(color: Colors.blue, fontSize: 12),
@@ -145,38 +133,18 @@ class LoginView extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     /// BUTTON MASUK
-                    Material(
-                      color: const Color(0xFF2D3E9F),
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        onTap: controller.login,
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Masuk",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Icon(Icons.check, color: Colors.white, size: 18),
-                            ],
-                          ),
-                        ),
-                      ),
+                    CustomElevatedButton(
+                      label: "Masuk",
+                      icon: Icons.done,
+                      onTap: controller.login,
+                      // onTap: () {
+                      //   Get.toNamed('/dashboard');
+                      // },
                     ),
 
                     const SizedBox(height: 20),
-
                     const Divider(),
                     const SizedBox(height: 8),
-
                     const Text(
                       "Belum punya akun? Hubungi Admin",
                       style: TextStyle(fontSize: 12),
