@@ -1,18 +1,24 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   var currentDate = ''.obs;
   var currentTime = ''.obs;
 
+  var isAbsenMasuk = true.obs;
+
   Timer? _timer;
+
+  GestureTapCallback? get absenKeluar => null;
+
+  GestureTapCallback? get absenMasuk => null;
 
   @override
   void onInit() {
     super.onInit();
     _updateDateTime();
 
-    // Timer agar detik jamnya terus berjalan
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateDateTime();
     });
@@ -44,6 +50,17 @@ class HomeController extends GetxController {
     String minute = now.minute.toString().padLeft(2, '0');
     String second = now.second.toString().padLeft(2, '0');
     currentTime.value = "$hour:$minute:$second WIB";
+  }
+
+  void toggleAbsen() {
+    isAbsenMasuk.value = !isAbsenMasuk.value;
+
+    Get.snackbar(
+      "Berhasil",
+      isAbsenMasuk.value ? "Anda telah Absen Keluar" : "Anda telah Absen Masuk",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
   }
 
   @override
