@@ -57,7 +57,9 @@ class HomeController extends GetxController {
 
     Get.snackbar(
       "Berhasil",
-      isAbsenMasuk.value ? "Anda telah Absen Keluar" : "Anda telah Absen Masuk",
+      isAbsenMasuk.value
+          ? "Anda telah melakukan Absen Keluar"
+          : "Anda telah melakukan Absen Masuk",
       backgroundColor: Colors.green,
       colorText: Colors.white,
     );
