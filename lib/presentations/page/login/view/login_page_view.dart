@@ -14,7 +14,7 @@ class LoginView extends StatelessWidget {
       backgroundColor: const Color(0xFFEDEDED),
       body: Stack(
         children: [
-          Container(height: 260, color: const Color(0xFF1E4B8F)),
+          Container(height: 450, color: const Color(0xFF1E4B8F)),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
