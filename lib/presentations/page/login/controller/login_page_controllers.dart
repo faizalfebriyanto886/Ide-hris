@@ -1,44 +1,61 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../routes/app_routes.dart';
+import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  String email = '';
+  String password = '';
 
-  var isObscure = true.obs;
-  var isLoading = false.obs;
+  final isObscure = true.obs;
+
+  void setEmail(String value) {
+    email = value;
+  }
+
+  void setPassword(String value) {
+    password = value;
+  }
 
   void togglePassword() {
     isObscure.value = !isObscure.value;
   }
 
-  void goToForgotPassword() {
-    Get.toNamed(Routes.FORGOT_PASSWORD);
-  }
-
-  Future<void> login() async {
-    final username = usernameController.text.trim();
-    final password = passwordController.text.trim();
-
-    if (username.isEmpty || password.isEmpty) {
-      Get.snackbar("Error", "Username dan password wajib diisi");
+  void login() {
+    if (email.isEmpty || password.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Email dan password wajib diisi',
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
       return;
     }
 
-    isLoading.value = true;
+    if (email != 'user@gmail.com') {
+      Get.snackbar(
+        'Error',
+        'Email tidak cocok',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
 
-    await Future.delayed(const Duration(seconds: 1));
+    if (password != 'password') {
+      Get.snackbar(
+        'Error',
+        'Password salah',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
 
-    isLoading.value = false;
-
-    Get.snackbar("Success", "Login berhasil (dummy)");
-  }
-
-  @override
-  void onClose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.onClose();
+    Get.snackbar(
+      'Sukses',
+      'Login berhasil',
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
+    Get.offAllNamed('/dashboard');
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idehris/presentations/routes/app_pages.dart';
-import 'package:idehris/presentations/routes/app_routes.dart';
+import 'presentations/routes/app_pages.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.LOGIN,
-      getPages: AppPages.pages,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
     );
   }
 }
