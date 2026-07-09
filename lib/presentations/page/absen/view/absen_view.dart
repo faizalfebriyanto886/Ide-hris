@@ -87,7 +87,7 @@ class AbsenView extends StatelessWidget {
                   children: [
                     TileLayer(
                       urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.naisya.idehris',
                     ),
                     CircleLayer(
