@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,28 +9,32 @@ class AbsenController extends GetxController {
   var currentLng = 0.0.obs;
   var currentAddress = "Mencari lokasi...".obs;
 
+  StreamSubscription<Position>? positionStream;
+
   @override
   void onInit() {
     super.onInit();
-    getCurrentLocation();
+    startLiveTracking();
   }
 
-  // Fungsi untuk mendapatkan lokasi dan alamat
-  Future<void> getCurrentLocation() async {
+  @override
+  void onClose() {
+    positionStream?.cancel();
+    super.onClose();
+  }
+
+  void startLiveTracking() async {
     isLoading.value = true;
     currentAddress.value = "Mencari lokasi...";
 
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       currentAddress.value = "GPS tidak aktif";
       isLoading.value = false;
       return;
     }
 
-    permission = await Geolocator.checkPermission();
+    LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
@@ -45,10 +50,24 @@ class AbsenController extends GetxController {
       return;
     }
 
-    Position position = await Geolocator.getCurrentPosition(
+    Position initialPosition = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
+    await _updatePositionAndAddress(initialPosition);
+    isLoading.value = false;
 
+    positionStream =
+        Geolocator.getPositionStream(
+          locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.high,
+            distanceFilter: 2,
+          ),
+        ).listen((Position position) {
+          _updatePositionAndAddress(position);
+        });
+  }
+
+  Future<void> _updatePositionAndAddress(Position position) async {
     currentLat.value = position.latitude;
     currentLng.value = position.longitude;
 
@@ -57,16 +76,13 @@ class AbsenController extends GetxController {
         position.latitude,
         position.longitude,
       );
-
       if (placemarks.isNotEmpty) {
         geo.Placemark place = placemarks[0];
         currentAddress.value =
             "${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}";
       }
     } catch (e) {
-      currentAddress.value = "Gagal memuat alamat lengkap";
+      // Abaikan error geocoding jika titik bergerak terlalu cepat
     }
-
-    isLoading.value = false;
   }
 }

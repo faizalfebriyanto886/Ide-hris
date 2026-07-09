@@ -58,8 +58,7 @@ class HomeView extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
-              // PERUBAHAN ADA DI BARIS INI
-              Get.to(() => const AbsenView(), arguments: teksTombol);
+              Get.to(() => AbsenView(), arguments: teksTombol);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: isMasuk

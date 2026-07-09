@@ -7,14 +7,14 @@ import '../../home/controller/home_controller.dart';
 import '../controller/absen_controller.dart';
 
 class AbsenView extends StatelessWidget {
-  const AbsenView({super.key});
+  AbsenView({super.key});
+
+  final MapController mapController = MapController();
 
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final absenController = Get.put(AbsenController());
-
-    // VARIABEL INI YANG AKAN MENANGKAP STATUS ABSEN DARI HALAMAN HOME
     final String jenisAbsen = Get.arguments ?? "Absen Masuk";
 
     return Scaffold(
@@ -36,7 +36,7 @@ class AbsenView extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      jenisAbsen, // MENGGUNAKAN VARIABEL DINAMIS
+                      jenisAbsen,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -76,9 +76,7 @@ class AbsenView extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return FlutterMap(
-                  key: ValueKey(
-                    '${absenController.currentLat.value}_${absenController.currentLng.value}',
-                  ),
+                  mapController: mapController,
                   options: MapOptions(
                     initialCenter: ll.LatLng(
                       absenController.currentLat.value,
@@ -92,6 +90,21 @@ class AbsenView extends StatelessWidget {
                           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.naisya.idehris',
                     ),
+                    CircleLayer(
+                      circles: [
+                        CircleMarker(
+                          point: ll.LatLng(
+                            absenController.currentLat.value,
+                            absenController.currentLng.value,
+                          ),
+                          color: const Color(0xFF1E3A8A).withOpacity(0.15),
+                          borderStrokeWidth: 1,
+                          borderColor: const Color(0xFF1E3A8A).withOpacity(0.3),
+                          useRadiusInMeter: true,
+                          radius: 50,
+                        ),
+                      ],
+                    ),
                     MarkerLayer(
                       markers: [
                         Marker(
@@ -99,12 +112,28 @@ class AbsenView extends StatelessWidget {
                             absenController.currentLat.value,
                             absenController.currentLng.value,
                           ),
-                          child: const Icon(
-                            Icons.location_on,
-                            color: Colors.red,
-                            size: 45,
+                          width: 22,
+                          height: 22,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF1E3A8A),
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 3),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                      ],
+                    ),
+                    const RichAttributionWidget(
+                      attributions: [
+                        TextSourceAttribution('© OpenStreetMap contributors'),
                       ],
                     ),
                   ],
@@ -161,7 +190,15 @@ class AbsenView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => absenController.getCurrentLocation(),
+                          onPressed: () {
+                            mapController.move(
+                              ll.LatLng(
+                                absenController.currentLat.value,
+                                absenController.currentLng.value,
+                              ),
+                              17.0,
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             shape: RoundedRectangleBorder(
@@ -185,7 +222,7 @@ class AbsenView extends StatelessWidget {
                               ),
                               SizedBox(width: 6),
                               Icon(
-                                Icons.autorenew,
+                                Icons.my_location,
                                 color: Colors.black87,
                                 size: 18,
                               ),
