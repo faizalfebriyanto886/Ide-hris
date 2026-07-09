@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:idehris/presentations/page/absen/view/absen_view.dart';
 import '../controller/home_controller.dart';
 import '../../profile/controller/profile_controller.dart';
+import '../../home/widget/header profile/header_profile_widget.dart';
+import '../../../page/home/widget/absensi card/absensi_card_widget.dart';
+import '../widget/menu utama/menu_utama_widget.dart';
+import '../../home/widget/jadwal harian/jadwal_hari_ini_widget.dart';
+import '../widget/riwayat pengajuan/riwayat_pengajuan_widget.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -16,139 +22,75 @@ class HomeView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 24,
-                    backgroundColor: Color(0xFFE6E9F5),
-                    child: Icon(Icons.person, size: 28, color: Colors.grey),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Obx(
-                          () => Text(
-                            controller.greeting.value,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Obx(
-                          () => Text(
-                            profileController.userName.value,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Obx(
-                        () => Text(
-                          controller.currentDate.value,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Obx(
-                        () => Text(
-                          controller.currentTime.value,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            HeaderProfileWidget(
+              controller: controller,
+              profileController: profileController,
             ),
-
             Expanded(
-              child: Center(
+              child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.home_outlined, size: 80, color: Colors.grey),
-                    SizedBox(height: 16),
-                    Text(
-                      "Ini Halaman Utama",
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
-                    ),
+                  children: [
+                    const AbsensiCardWidget(),
+                    const MenuUtamaWidget(),
+                    JadwalHariIniWidget(controller: controller),
+                    RiwayatPengajuanWidget(controller: controller),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
             ),
-
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.only(
-                top: 12,
-                left: 16,
-                right: 16,
-                bottom: 12,
-              ),
-              child: Obx(() {
-                bool isMasuk = controller.isAbsenMasuk.value;
-                return Material(
-                  color: isMasuk
-                      ? const Color(0xFF2D3E9F)
-                      : Colors.red.shade600,
-                  borderRadius: BorderRadius.circular(12),
-                  child: InkWell(
-                    onTap: controller.toggleAbsen,
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            isMasuk ? "Absen Masuk" : "Absen Keluar",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Icon(
-                            isMasuk ? Icons.login : Icons.logout,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            ),
+            _buildBottomButton(controller),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBottomButton(HomeController controller) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.all(16),
+      child: Obx(() {
+        bool isMasuk = controller.isAbsenMasuk.value;
+        String teksTombol = isMasuk ? "Absen Masuk" : "Absen Keluar";
+
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              // PERUBAHAN ADA DI BARIS INI
+              Get.to(() => const AbsenView(), arguments: teksTombol);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: isMasuk
+                  ? const Color(0xFF1E3A8A)
+                  : Colors.red.shade600,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  teksTombol,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  isMasuk ? Icons.login : Icons.logout,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
     );
   }
 }

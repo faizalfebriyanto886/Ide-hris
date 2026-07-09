@@ -39,7 +39,7 @@ class ProfileController extends GetxController {
               style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
             ),
           ),
-
+          // Menggunakan CustomElevatedButton yang dibungkus SizedBox agar tidak meleber
           SizedBox(
             width: 120,
             child: CustomElevatedButton(

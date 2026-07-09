@@ -6,18 +6,54 @@ class HomeController extends GetxController {
   var currentDate = ''.obs;
   var currentTime = ''.obs;
   var greeting = ''.obs;
-
   var isAbsenMasuk = true.obs;
 
   Timer? _timer;
+
+  var listJadwalHariIni = <JadwalHariIniModel>[
+    JadwalHariIniModel(
+      namaJadwal: "Rapat Harian SDM Untuk Persiapan Harpitnas Pe...",
+      lokasiMeet: "Zoom Meeting",
+      waktuMeet: "09:00 - 12:00 WIB",
+      borderColor: const Color(0xFF2D3E9F),
+    ),
+    JadwalHariIniModel(
+      namaJadwal: "Sosialisasi Pemutakhiran Fitur Website POS",
+      lokasiMeet: "Aula Gatotkaca Mahabaratha 1",
+      waktuMeet: "09:00 - 12:00 WIB",
+      borderColor: Colors.green,
+    ),
+    JadwalHariIniModel(
+      namaJadwal: "Rapat Harian SDM",
+      lokasiMeet: "Gedung Serbaguna Burningroom...",
+      waktuMeet: "09:00 - 12:00 WIB",
+      borderColor: Colors.orange, // Oranye
+    ),
+  ].obs;
+
+  var listRiwayatPengajuan = <RiwayatPengajuanModel>[
+    RiwayatPengajuanModel(
+      namaPengajuan: "Cuti Pernikahan",
+      waktuPengajuan: "22 Jan 2020, 09:00 WIB",
+      status: "Menunggu",
+      colorPrefix: const Color(0xFF2D3E9F), // Biru
+    ),
+    RiwayatPengajuanModel(
+      namaPengajuan: "Izin Setengah Hari",
+      waktuPengajuan: "20 Jan 2020, 09:00 WIB",
+      status: "Menunggu",
+      colorPrefix: Colors.orange, // Oranye
+    ),
+  ].obs;
 
   @override
   void onInit() {
     super.onInit();
     _updateDateTime();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _updateDateTime();
-    });
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) => _updateDateTime(),
+    );
   }
 
   void _updateDateTime() {
@@ -37,38 +73,26 @@ class HomeController extends GetxController {
       'Des',
     ];
 
-    String day = now.day.toString().padLeft(2, '0');
-    String month = months[now.month - 1];
-    String year = now.year.toString();
-    currentDate.value = "$day $month $year";
+    currentDate.value =
+        "${now.day.toString().padLeft(2, '0')} ${months[now.month - 1]} ${now.year}";
+    currentTime.value =
+        "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')} WIB";
 
-    String hour = now.hour.toString().padLeft(2, '0');
-    String minute = now.minute.toString().padLeft(2, '0');
-    String second = now.second.toString().padLeft(2, '0');
-    currentTime.value = "$hour:$minute:$second WIB";
-
-    if (now.hour >= 0 && now.hour < 11) {
+    if (now.hour < 11) {
       greeting.value = "Selamat Pagi,";
-    } else if (now.hour >= 11 && now.hour < 15) {
+    } else if (now.hour < 15)
+      // ignore: curly_braces_in_flow_control_structures
       greeting.value = "Selamat Siang,";
-    } else if (now.hour >= 15 && now.hour < 18) {
+    else if (now.hour < 18)
+      // ignore: curly_braces_in_flow_control_structures
       greeting.value = "Selamat Sore,";
-    } else {
+    else
+      // ignore: curly_braces_in_flow_control_structures
       greeting.value = "Selamat Malam,";
-    }
   }
 
   void toggleAbsen() {
     isAbsenMasuk.value = !isAbsenMasuk.value;
-
-    Get.snackbar(
-      "Berhasil",
-      isAbsenMasuk.value
-          ? "Anda telah batal dan kembali ke Absen Masuk"
-          : "Anda telah Absen Keluar",
-      backgroundColor: isAbsenMasuk.value ? Colors.blue : Colors.red.shade600,
-      colorText: Colors.white,
-    );
   }
 
   @override
@@ -76,4 +100,32 @@ class HomeController extends GetxController {
     _timer?.cancel();
     super.onClose();
   }
+}
+
+class JadwalHariIniModel {
+  final String? namaJadwal;
+  final String? lokasiMeet;
+  final String? waktuMeet;
+  final Color? borderColor;
+
+  JadwalHariIniModel({
+    this.namaJadwal,
+    this.lokasiMeet,
+    this.waktuMeet,
+    this.borderColor,
+  });
+}
+
+class RiwayatPengajuanModel {
+  final String? namaPengajuan;
+  final String? waktuPengajuan;
+  final String? status;
+  final Color? colorPrefix;
+
+  RiwayatPengajuanModel({
+    this.namaPengajuan,
+    this.waktuPengajuan,
+    this.status,
+    this.colorPrefix,
+  });
 }

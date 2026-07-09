@@ -86,8 +86,8 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                         ),
                         const SizedBox(height: 20),
                         CustomElevatedButton(
-                          label: "Kirim",
                           onTap: controller.submit,
+                          label: 'Kirim',
                         ),
                       ],
                     ),
