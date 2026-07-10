@@ -6,12 +6,12 @@ class CustomElevatedButton extends StatelessWidget {
   final IconData? icon;
   final Color backgroundColor;
   final Color textColor;
-  final double height; // Tambahan agar tinggi bisa diatur
-  final double fontSize; // Tambahan agar ukuran font bisa disesuaikan
+  final double height;
+  final double fontSize;
 
   const CustomElevatedButton({
     super.key,
-    required this.label, // Wajib diisi menggunakan label: "Teks"
+    required this.label,
     required this.onTap,
     this.icon,
     this.backgroundColor = const Color(0xFF2D3E9F),
