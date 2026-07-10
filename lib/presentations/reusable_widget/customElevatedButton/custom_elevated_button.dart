@@ -29,7 +29,7 @@ class CustomElevatedButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          height: height, // <-- Ini yang bikin teks tidak terpotong lagi
+          height: height,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
