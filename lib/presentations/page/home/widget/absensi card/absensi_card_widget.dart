@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:idehris/presentations/page/home/controller/home_controller.dart';
 
 class AbsensiCardWidget extends StatelessWidget {
   const AbsensiCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
+
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.only(bottom: 16),
@@ -35,8 +39,18 @@ class AbsensiCardWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildAbsenInfo("08:10:00", "Absen Masuk"),
-                _buildAbsenInfo("00:00:00", "Absen Keluar"),
+                Obx(
+                  () => _buildAbsenInfo(
+                    homeController.jamAbsenMasuk.value,
+                    "Absen Masuk",
+                  ),
+                ),
+                Obx(
+                  () => _buildAbsenInfo(
+                    homeController.jamAbsenKeluar.value,
+                    "Absen Keluar",
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -90,6 +104,7 @@ class AbsensiCardWidget extends StatelessWidget {
     );
   }
 
+  // Fungsi helper tidak perlu diubah, cukup menerima data String dari Obx di atas
   Widget _buildAbsenInfo(String time, String label) {
     return Row(
       children: [

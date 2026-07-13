@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:idehris/presentations/page/home/widget/camera/view/camera_absen_view.dart';
 import 'package:latlong2/latlong.dart' as ll;
 
 import '../../home/controller/home_controller.dart';
@@ -234,8 +235,12 @@ class AbsenView extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.back();
-                            homeController.toggleAbsen();
+                            Get.to(
+                              () => const CameraAbsenView(),
+                              arguments: jenisAbsen,
+                            );
+                            // Get.back();
+                            // homeController.toggleAbsen();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1E3A8A),

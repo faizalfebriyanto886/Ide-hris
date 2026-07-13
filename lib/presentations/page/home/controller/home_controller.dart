@@ -7,6 +7,8 @@ class HomeController extends GetxController {
   var currentTime = ''.obs;
   var greeting = ''.obs;
   var isAbsenMasuk = true.obs;
+  var jamAbsenMasuk = "--:-- WIB".obs;
+  var jamAbsenKeluar = "--:-- WIB".obs;
 
   Timer? _timer;
 
