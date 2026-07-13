@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   String email = '';
@@ -19,7 +20,8 @@ class LoginController extends GetxController {
     isObscure.value = !isObscure.value;
   }
 
-  void login() {
+  //fungsi menjadi async
+  void login() async {
     if (email.isEmpty || password.isEmpty) {
       Get.snackbar(
         'Error',
@@ -50,12 +52,18 @@ class LoginController extends GetxController {
       return;
     }
 
+    // --- 3. SIMPAN SESI LOGIN DI SINI ---
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+    // ------------------------------------
+
     Get.snackbar(
       'Sukses',
       'Login berhasil',
       backgroundColor: Colors.green,
       colorText: Colors.white,
     );
+
     Get.offAllNamed('/dashboard');
   }
 }
